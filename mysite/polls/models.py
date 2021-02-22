@@ -23,7 +23,7 @@ class Choice(models.Model):
         return self.choice_text
 
 class Thought(models.Model):
-    title = models.CharField(max_length=200, default='')
+    title = models.CharField(max_length=100, default='')
     thought= models.CharField(max_length=1000, default='')
     pub_date = models.DateTimeField(default=timezone.now)
 
