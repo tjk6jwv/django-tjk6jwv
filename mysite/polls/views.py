@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from .models import Choice, Question
+from .models import Choice, Question, Thought
+from .forms import ThoughtForm
 
 #View of latest few Questions
 class IndexView(generic.ListView):
@@ -59,4 +60,27 @@ def vote(request, question_id):
     # user hits the Back button.
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
+class ThoughtListView(generic.ListView):
+    template_name = "polls/thought_list.html"
 
+    def get_queryset(self):
+        """
+        Return the last five published questions (not including those set to be
+        published in the future).
+        """
+        return Thought.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
+
+#Handles thought submission
+def thoughts(request):
+    if request.method == 'POST':
+        form = ThoughtForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('polls:thoughts'))
+    else:
+        form = ThoughtForm()
+    return render(request, 
+                    'polls/thoughts.html',
+                    {'form' : form})

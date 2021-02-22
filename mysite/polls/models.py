@@ -21,3 +21,11 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     def __str__(self):
         return self.choice_text
+
+class Thought(models.Model):
+    title = models.CharField(max_length=200, default='')
+    thought= models.CharField(max_length=1000, default='')
+    pub_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title

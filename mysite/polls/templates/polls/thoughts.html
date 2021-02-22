@@ -1,0 +1,7 @@
+<h1>Your Thoughts</h1>
+
+<form action="{% url 'polls:thoughts' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class='button' type='submit'>Submit</button>
+</form>
