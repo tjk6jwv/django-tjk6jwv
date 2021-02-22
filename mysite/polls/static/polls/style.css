@@ -4,6 +4,5 @@ li a {
 }
 
 body {
-    background: rgb(214, 145, 145) url("images/background.gif") no-repeat;
-    background-size: auto;
+    background: white url("images/background.gif") no-repeat;
 }
