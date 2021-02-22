@@ -2,12 +2,15 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-    <li><a href="{% url 'polls:detail' thought.id %}">{{ thought.thought }}</a></li>
-    {% endfor %}
-    </ul>
+{% if thought_list %}
+    <dl>
+        {% for thought in thought_list %}
+            <dt><h2>{{ thought.title }}</h2></dt>
+            <dd>{{ thought.thought }}</dd></br></br>
+        {% endfor %}
+    </dl>
 {% else %}
     <p>No thoughts are available.</p>
 {% endif %}
+
+<a href="{% url 'polls:thoughts' %}">Submit a Thought?</a>

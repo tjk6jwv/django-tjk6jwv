@@ -62,15 +62,10 @@ def vote(request, question_id):
 
 class ThoughtListView(generic.ListView):
     template_name = "polls/thought_list.html"
+    context_object_name = 'thought_list'
 
     def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        return Thought.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')
+        return Thought.objects.order_by('-pub_date')[:]
 
 #Handles thought submission
 def thoughts(request):
@@ -78,7 +73,7 @@ def thoughts(request):
         form = ThoughtForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('polls:thoughts'))
+            return HttpResponseRedirect(reverse('polls:thought_list'))
     else:
         form = ThoughtForm()
     return render(request, 
